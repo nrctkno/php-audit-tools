@@ -30,7 +30,7 @@ _What about Composer?_
 - This library isn't conceived to be used as part of a project (please don't). So composer.. nope.
 
 _...and classes, and a healthy code organization?_
-- We're talking about less than 100 lines of code. Is it neccesary to fall in a cargo-cult programming situation?
+- We're talking about less than 100 lines of code. Is it necessary to fall in a cargo-cult programming situation?
 
 _May I use your code to...?_
 - Do whatever you want. It's yours.
