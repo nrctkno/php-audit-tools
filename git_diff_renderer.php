@@ -1,13 +1,27 @@
 <?php
 
-function getParam($name, $default = null)
+class Request
 {
-    return isset($_REQUEST[$name]) ? $_REQUEST[$name] : $default;
+
+    public static function getParam($name, $default = null, $empty_msg = null)
+    {
+        if (isset($_REQUEST[$name])) {
+            return $_REQUEST[$name];
+        }
+
+        if (is_null($empty_msg)) {
+            return $default;
+        } else {
+            die($empty_msg);
+        }
+    }
+
 }
 
-function getStyleForLine(string $line): string
+class GitDiffFormatter
 {
-    $styles = [
+
+    private const STYLES = [
         'linerem' => 'background-color: #ffdddd;',
         'lineadd' => 'background-color: #ddffdd;',
         'meta' => 'background-color: #effaff; font-style: italic;',
@@ -15,8 +29,7 @@ function getStyleForLine(string $line): string
         'notes' => 'font-style: italic;',
         'default' => 'color: #777777;',
     ];
-
-    $rules = [
+    private const RULES = [
         'diff ' => 'command',
         '@' => 'meta',
         'index' => 'meta',
@@ -26,39 +39,58 @@ function getStyleForLine(string $line): string
         '+' => 'lineadd',
         '\ ' => 'meta',
     ];
-    
-    $style = $styles['default'];
 
-    foreach ($rules as $key => $rule) {
-        if (strpos($line, $key) === 0) {
-            $style = $styles[$rule];
-            break;
+    protected static function getStyleForLine(string $line): string
+    {
+        $style = self::STYLES['default'];
+
+        foreach (self::RULES as $key => $rule) {
+            if (strpos($line, $key) === 0) {
+                $style = self::STYLES[$rule];
+                break;
+            }
+        }
+        return 'font-family: monospace; white-space: pre;' . $style;
+    }
+
+    public static function formattedOutput(array $lines): void
+    {
+        foreach ($lines as $line) {
+            $style = self::getStyleForLine($line);
+            echo '<span style="' . $style . '">' . htmlentities($line) . "</span>\r\n";
         }
     }
 
-    return 'font-family: monospace; white-space: pre;' . $style;
 }
 
-function processGitDiffOutput(array $lines)
+class GitDiffCommand
 {
-    foreach ($lines as $line) {
-        $style = getStyleForLine($line);
-        echo '<span style="' . $style . '">' . htmlentities($line) . "</span>\r\n";
+
+    public static function run($path): array
+    {
+        $output = [];
+        $retcode = [];
+
+        chdir($path);
+        exec('git diff', $output, $retcode);
+
+        return ['path' => $path, 'output' => $output, 'retcode' => $retcode];
     }
+
 }
 
-$path = getParam('path');
+class Application
+{
 
-if (is_null($path)) {
-    echo 'path not set. Try with <a href="?path=my/local/path/to/git/repo">?path=my/local/path/to/git/repo</a>';
-    exit(0);
+    static function execute(): array
+    {
+        $path = \Request::getParam('path', null, 'Path not set. Try with <a href="?path=my/local/path/to/git/repo">?path=my/local/path/to/git/repo</a>');
+        return GitDiffCommand::run($path);
+    }
+
 }
 
-$output = [];
-$retcode = [];
-
-chdir($path);
-exec('git diff', $output, $retcode);
+$diff_result = Application::execute();
 ?>
 
 <!doctype html>
@@ -67,9 +99,8 @@ exec('git diff', $output, $retcode);
         <title>Git diff renderer</title>
     </head>
     <body>
-        <p>Path: <?php echo $path ?></p>
-        <p>Exit code: <?php echo $retcode ?></p>
-
-        <pre><?php processGitDiffOutput($output); ?></pre>
+        <p>Path: <?php echo $diff_result['path'] ?></p>
+        <p>Exit code: <?php echo $diff_result['retcode'] ?></p>
+        <pre><?php \GitDiffFormatter::formattedOutput($diff_result['output']); ?></pre>
     </body>
 </html>
