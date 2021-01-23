@@ -1,6 +1,6 @@
 # git diff renderer
 
-Use this script to check the git diff of your repositories in HTML. Then you can copy the text keeping the format.
+Use this script to `git diff` your repositories in HTML. Then you can copy the text keeping the format.
 
 
 ## Why
