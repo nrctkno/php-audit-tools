@@ -20,10 +20,12 @@ That's why I wrote this simple script that takes advantage of the inherent power
 - Access to `http://[your_localhost_domain_or_ip]/git_diff_renderer.php?path=path/to/your/git/repo/folder` from your browser.
 - That's all. Enjoy.
 
+![screenshot](screenshot.png)
+
 
 ## Q&A
 
-_Why don´t you use CSS?_
+_Why inline styles?_
 - Because most of the document editors doesn't understand CSS.
 
 _What about Composer?_
