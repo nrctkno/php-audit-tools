@@ -5,7 +5,7 @@ Use this script to `git diff` your repositories in HTML. Then you can copy the t
 
 ## Why
 
-I had to audit some projects at work, checking the diff between the deployed versions and the codebase in GIT. After that, had to write report for every project. 
+I had to audit some projects at work, checking the diff between the deployed versions and the codebase in GIT. After that, had to write a report for every project. 
 
 Have you ever tried to keep the git diff's format? Of course you can use tools like Github compare, diffy.org, gitKraken or whatever, but you end up taking snapshots of the code (not cool).
 
