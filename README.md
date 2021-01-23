@@ -26,7 +26,7 @@ That's why I wrote this simple script that takes advantage of the inherent power
 ## Q&A
 
 _Why inline styles?_
-- Because most of the document editors doesn't understand CSS.
+- Because most document editors don't understand CSS.
 
 _What about Composer?_
 - This library isn't conceived to be used as part of a project (please don't). So composer.. nope.
