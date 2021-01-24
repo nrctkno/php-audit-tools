@@ -1,9 +1,50 @@
 <?php
 
-class Request
+abstract class Request
 {
 
-    public static function getParam($name, $default = null, $empty_msg = null)
+    abstract function getParam($name, $default = null, $empty_msg = null);
+}
+
+class ConsoleRequest extends Request
+{
+
+    private $arguments;
+
+    function __construct()
+    {
+        $this->arguments = [];
+
+        $args = $_SERVER['argv'];
+
+        unset($args[0]);
+
+
+        foreach ($args as $key => $arg) {
+            list($name, $value) = explode('=', $arg);
+            $this->arguments["$name"] = $value;
+        }
+    }
+
+    public function getParam($name, $default = null, $empty_msg = null)
+    {
+        if (isset($this->arguments[$name])) {
+            return $this->arguments[$name];
+        }
+
+        if (is_null($empty_msg)) {
+            return $default;
+        } else {
+            die($empty_msg);
+        }
+    }
+
+}
+
+class BrowserRequest extends Request
+{
+
+    public function getParam($name, $default = null, $empty_msg = null)
     {
         if (isset($_REQUEST[$name])) {
             return $_REQUEST[$name];
@@ -14,6 +55,27 @@ class Request
         } else {
             die($empty_msg);
         }
+    }
+
+}
+
+class Environment
+{
+
+    private $request;
+
+    function __construct()
+    {
+        if (defined('STDIN')) {
+            $this->request = new \ConsoleRequest();
+        } else {
+            $this->request = new \BrowserRequest();
+        }
+    }
+
+    function getRequest()
+    {
+        return $this->request;
     }
 
 }
@@ -129,18 +191,21 @@ class GitDiffCommand
 
 }
 
-class Application
+class GitDiffRenderer
 {
 
-    static function execute(): array
+    private const PATH_NOT_SET_MSG = 'Path not set. Try with <a href="?path=my/local/path/to/git/repo">?path=my/local/path/to/git/repo</a>';
+
+    static function execute(\Request $request): array
     {
-        $path = \Request::getParam('path', null, 'Path not set. Try with <a href="?path=my/local/path/to/git/repo">?path=my/local/path/to/git/repo</a>');
+        $path = $request->getParam('path', null, self::PATH_NOT_SET_MSG);
         return GitDiffCommand::run($path);
     }
 
 }
 
-$diff_result = Application::execute();
+$environment = new \Environment();
+$diff_result = GitDiffRenderer::execute($environment->getRequest());
 ?>
 
 <!doctype html>
