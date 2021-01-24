@@ -19,8 +19,7 @@ class ConsoleRequest extends Request
 
         unset($args[0]);
 
-
-        foreach ($args as $key => $arg) {
+        foreach ($args as $arg) {
             list($name, $value) = explode('=', $arg);
             $this->arguments["$name"] = $value;
         }
