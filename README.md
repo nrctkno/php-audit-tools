@@ -16,8 +16,8 @@ If we're auditing text, then we want to keep the text, right? This script that t
 
 1. Clone the script in your public html folder.
 2. Run it:
-  a. From your browser: Access to `http://localhost/git_diff_renderer/git_diff_renderer.php?path=path/to/your/git/repo/folder`. Replace `localhost` by a valid host.
-  b. From command line: `php -f git_diff_renderer.php path=path/to/your/git/repo/folder > output.html`
+    - From your browser: Access to `http://localhost/git_diff_renderer/git_diff_renderer.php?path=path/to/your/git/repo/folder`. Replace `localhost` by a valid host.
+    - From command line: `php -f git_diff_renderer.php path=path/to/your/git/repo/folder > output.html`
 
 ![screenshot](screenshot.png)
 
