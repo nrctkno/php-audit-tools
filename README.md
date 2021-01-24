@@ -9,9 +9,7 @@ I had to audit some projects at work, checking the diff between the deployed ver
 
 Have you ever tried to keep the git diff's format? Of course you can use tools like Github compare, diffy.org, gitKraken or whatever, but you end up taking snapshots of the code (not cool).
 
-If we're auditing text, then we want to keep the text, right?
-
-That's why I wrote this simple script that takes advantage of the inherent power of the native git diff command and, of course, HTML.
+If we're auditing text, then we want to keep the text, right? This script that takes advantage of the inherent power of the native git diff command and, of course, HTML.
 
 
 ## Usage
