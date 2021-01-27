@@ -174,18 +174,28 @@ class GitDiffFormatter
 
 }
 
-class GitDiffCommand
+class GitDiffCommandReader
 {
 
     public static function run($path): array
     {
         $output = [];
-        $retcode = [];
+        $retcode = null;
 
         chdir($path);
         exec('git diff', $output, $retcode);
 
         return ['path' => $path, 'output' => $output, 'retcode' => $retcode];
+    }
+
+}
+
+class FileReader
+{
+
+    public static function run($path): array
+    {
+        return ['path' => $path, 'output' => file($path), 'retcode' => 0];
     }
 
 }
@@ -198,7 +208,14 @@ class GitDiffRenderer
     static function execute(\Request $request): array
     {
         $path = $request->getParam('path', null, self::PATH_NOT_SET_MSG);
-        return GitDiffCommand::run($path);
+
+        if (is_file($path)) {
+            return FileReader::run($path);
+        } elseif (is_dir($path)) {
+            return GitDiffCommandReader::run($path);
+        } else {
+            die('Specified path is not a directory of a file.');
+        }
     }
 
 }

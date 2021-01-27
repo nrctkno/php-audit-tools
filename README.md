@@ -19,6 +19,9 @@ If we're auditing text, then we want to keep the text, right? This script that t
     - From your browser: Access to `http://localhost/git_diff_renderer/git_diff_renderer.php?path=path/to/your/git/repo/folder`. Replace `localhost` by a valid host.
     - From command line: `php -f git_diff_renderer.php path=path/to/your/git/repo/folder > output.html`
 
+You can also process a diff file (a file with the output of a previous `git diff` execution) passing the file path instead of a directory.
+
+
 ![screenshot](screenshot.png)
 
 
@@ -29,20 +32,3 @@ _Why inline styles?_
 
 _What about Composer?_
 - This library isn't conceived to be used as part of a project (please don't). So composer.. nope.
-
-
-```
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@.....................@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@.............. @@@@................@@@@@@@@@@@@
-@@@@@@@@...................@@@@......................@@@@@@@
-@@@@@........@@@@@@@@@@ .. @@@@@@@@@ ...@@@@@@@@@ ......@@@@
-@@...........@@@ ****@@@@ @@@@ ***@@@@ @@@ ****@@@@ ......@@
-@...........@@@@......@@@ @@@ ... @@@..@@@..... @@@ ......@@
-@.......... @@@ ... @@@@ @@@@.... @@@ @@@ ... @@@@ .......@@
-@@.........@@@@@@@@@@....@@@ ... @@@..@@@@@@@@@..........@@@
-@@@@...... @@@ ......................@@@ ...............@@@@
-@@@@@@@...    ......................     ............@@@@@@@
-@@@@@@@@@@@....................................@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@...................@@@@@@@@@@@@@@@@@@@@@@@
-```
