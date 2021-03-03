@@ -1,18 +1,13 @@
 # PHP Audit tools
 
+This is a set of tools for auditing PHP projects and repositories.
 
-This is a toolset to audit PHP projects and repositories.
 
 ## Available tools
 
 ### GIT diff renderer
 
-Use this script to `git diff` your repositories in HTML. Then you can copy the text keeping the format.
-
-#### Purpose:
-Have you ever tried to keep the git diff's format? Of course you can use tools like Github compare, diffy.org, GitKraken or whatever, but you end up taking snapshots of the code (not cool).
-
-If we're auditing text, then we want to keep the text, right? This script that takes advantage of the inherent power of the native git diff command and, of course, HTML.
+This command allows you to visualize a git diff in formatted text, taking advantage of the inherent power of the native `git diff` command and HTML.
 
 #### Usage
 
@@ -23,7 +18,7 @@ If we're auditing text, then we want to keep the text, right? This script that t
 
 You can also process a diff file (a file with the output of a previous `git diff` execution) passing the file path instead of a directory.
 
-![screenshot](screenshot.png)
+![screenshot](doc/gdr.png)
 
 
 ### Show composer.lock requirements
@@ -33,6 +28,9 @@ Check your composer.lock dependencies and its required versions in a tree view.
 #### Usage
 
 2. From your console, run:
-- `php show_composer_lock_reqs.php`
+
+- `php show_composer_lock_reqs.php dev|prod` , use _dev_ or _prod_.
+
 or
-- `php show_composer_lock_reqs.php /my/base/dir/` (note the slash at the end)
+
+- `php show_composer_lock_reqs.php dev|prod /directory/of/composer_lock/` , note the slash at the end
