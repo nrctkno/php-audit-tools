@@ -34,3 +34,15 @@ Check your composer.lock dependencies and its required versions in a tree view.
 or
 
 - `php show_composer_lock_reqs.php dev|prod /directory/of/composer_lock/` , note the slash at the end
+
+
+### Get project metrics
+
+Analizes a directory and extract useful metrics (top files per size and per extension, among others).
+
+#### Usage
+
+2. From your console, run:
+
+- `php project_metrics.php /my/base/dir/`
+
